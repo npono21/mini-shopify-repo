@@ -8,7 +8,7 @@ SYSC 4806 A Project
 | name | student number |
 |------|----------------|
 |Arthur Atangana|101005197|
-|name|XXXXXXXXX|
+|Nicholai Ponomarev|101182048|
 |name|XXXXXXXXX|
 |name|XXXXXXXXX|
 
