@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* General Layout */
+        body,
+        html {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: #202020;
+            color: #333;
+        }
+
+        .header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #202020;
+            color: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            height: 10%;
+        }
+
+        #search-bar {
+            display: flex;
+            align-items: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        #search-bar input[type="search"] {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            font-size: 1em;
+        }
+
+        #search-bar button {
+            padding: 8px 15px;
+            border: none;
+            background-color: #333;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 0 5px 5px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        #search-bar button:hover {
+            background-color: #555;
+        }
+
+        .dropdown-account-menu {
+            position: relative;
+            margin-left: auto;
+        }
+
+        .dropdown-account-button {
+            background-color: #333;
+            color: white;
+            padding: 8px 12px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .dropdown-account-button:hover {
+            background-color: #555;
+        }
+
+        .dropdown-account-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            right: 0;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .dropdown-account-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-account-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .side-menu {
+            width: 250px;
+            background-color: lightgrey;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            border-top-left-radius: 15px;
+        }
+
+        .menu-item {
+            padding: 10px 15px;
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .menu-item:hover {
+            background-color: white;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 30px;
+            background: #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .content-area h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .content-area p {
+            font-size: 1em;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .tiles-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tile {
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.1s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .tile:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        #create-shop-button {
+            background-color: #333;
+            color: white;
+            padding: 8px 12px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            right: 0;
+            position: absolute;
+            margin-right: 25px;
+        }
+
+        #create-shop-button:hover {
+            background-color: #555;
+        }
+
+        .page-title-div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Modern Modal Style */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 30px;
+            width: 50%;
+            max-width: 500px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transform: scale(0.95);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .close {
+            color: #333;
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close:hover {
+            color: #ff5a5f;
+        }
+
+        .modal-content form label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .modal-content form input[type="text"],
+        .modal-content form textarea,
+        .modal-content form input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.2s;
+        }
+
+        .modal-content form input[type="text"]:focus,
+        .modal-content form textarea:focus,
+        .modal-content form input[type="file"]:focus {
+            border-color: #333;
+        }
+
+        .modal-content form input[type="submit"] {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content form input[type="submit"]:hover {
+            background-color: #555;
+        }
+    </style>
+    <script>
+        function toggleProfileMenuDropdown() {
+            const dropdownContent = document.querySelector(".dropdown-account-content");
+            const newShopButton = document.querySelector("#create-shop-button");
+
+            // Toggle dropdown visibility
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none"; // Hide dropdown
+                newShopButton.style.display = "block";  // Show "Create Shop" button
+            } else {
+                dropdownContent.style.display = "block"; // Show dropdown
+                newShopButton.style.display = "none";   // Hide "Create Shop" button
+            }
+        }
+
+        window.onclick = function (event) {
+            const dropdownContent = document.querySelector(".dropdown-account-content");
+            const dropdownButton = document.querySelector(".dropdown-account-button");
+            const newShopButton = document.querySelector("#create-shop-button");
+
+            // Close dropdown if the user clicks outside the button and dropdown
+            if (!event.target.matches('.dropdown-account-button') && !event.target.matches('.dropdown-account-content') && !event.target.matches('#create-shop-button')) {
+                if (dropdownContent) {
+                    dropdownContent.style.display = "none"; // Hide dropdown
+                    newShopButton.style.display = "block";  // Show "Create Shop" button
+                }
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="header-bar">
+        <img src="Shopify-Logo.wine.png" alt="Shopify Logo" style="width: 120px; height: auto;">
+        <form id="search-bar">
+            <input type="search" placeholder="Search...">
+            <button type="submit">Search</button>
+        </form>
+        <div class="dropdown-account-menu">
+            <button onclick="toggleProfileMenuDropdown()" class="dropdown-account-button">
+                <i class="fa fa-user"></i> Account
+            </button>
+            <div class="dropdown-account-content">
+                <a href="#">Manage Account</a>
+                <a href="#">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <aside class="side-menu">
+            <div class="menu-item"><i class="fa fa-home" aria-hidden="true"></i>
+                <p style="color: black;"> Home</p>
+            </div>
+            <div class="menu-item"><i class="fa fa-shopping-cart"></i>
+                <p style="color: black;"> Orders</p>
+            </div>
+            <div class="menu-item"><i class="fa fa-cog"></i>
+                <p style="color: black;"> Settings</p>
+            </div>
+        </aside>
+        <main class="content-area">
+            <div class="page-title-div">
+                <div>
+                    <h1>Welcome to the Merchant Dashboard</h1>
+                    <p>Manage your business activities, check orders, and stay on top of inventory and customer needs.
+                    </p>
+                </div>
+                <button id="create-shop-button">Create a Shop</button>
+            </div>
+            <h1 style="margin-top: 20px;">My Shops</h1>
+            <section class=" tiles-container">
+                <div class="tile">
+                    <h2>Shop 1 Name</h2>
+                    <img src="nafinia-putra-Kwdp-0pok-I-unsplash.jpg" alt="Shop Stock Image 1"
+                        style="width: 100%; height: 250px; border-radius: 5px; margin-top: 5px;">
+                </div>
+                <div class="tile">
+                    <h2>Shop 2 Name</h2>
+                    <img src="miguel-sousa-hUBeoOI0TmA-unsplash.jpg" alt="Shop Stock Image 1"
+                        style="width: 100%; height: 250px; border-radius: 5px; margin-top: 5px;">
+                </div>
+            </section>
+        </main>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form action="">
+                    <label for="select_shop_img">Select Shop Display Image:</label>
+                    <input type="file" id="select_shop_img" name="select_shop_img" accept="image/*">
+                    <label for="shop_name">Shop Name:</label><br>
+                    <input type="text" id="shop_name" name="shop_name"><br>
+                    <p><label for="shop_description">Shop Description:</label></p>
+                    <textarea id="shop_description" name="shop_description" rows="4" cols="50"></textarea>
+                    <br>
+                    <input type="submit" value="Create Shop">
+                </form>
+            </div>
+
+            <script>
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                // Get the button that opens the modal
+                var btn = document.getElementById("create-shop-button");
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks the button, open the modal 
+                btn.onclick = function () {
+                    modal.style.display = "block";
+                }
+
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function () {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            </script>
+
+        </div>
+    </div>
+</body>
+
+</html>
