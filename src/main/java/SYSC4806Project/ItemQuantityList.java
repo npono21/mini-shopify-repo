@@ -11,6 +11,7 @@ public class ItemQuantityList extends ArrayList<ItemQuantityList.ItemQuantityPai
 
     public ItemQuantityList() {}
 
+
     public ItemQuantityList(ArrayList<ItemQuantityPair> list) {
         this.addAll(list);
     }
@@ -22,6 +23,8 @@ public class ItemQuantityList extends ArrayList<ItemQuantityList.ItemQuantityPai
      * @return true if the amount could be added
      */
     public boolean addItems(Product product, int quantity) {
+
+        // TODO: guard against adding negative quantity
         if (product == null || !this.contains(product)) {return false;}
         else {
             for (ItemQuantityPair itemQuantityPair : this) {
@@ -40,7 +43,7 @@ public class ItemQuantityList extends ArrayList<ItemQuantityList.ItemQuantityPai
      * @return true if the product was added
      */
     public boolean addProduct(Product product) {
-        if (product == null || !this.contains(product)) {return false;}
+        if (product == null || this.contains(product)) {return false;}
         return this.add(new ItemQuantityPair(product));
     }
 
@@ -57,7 +60,7 @@ public class ItemQuantityList extends ArrayList<ItemQuantityList.ItemQuantityPai
                     System.out.println("Attempted to remove more quantity than available. None were removed.");
                     return false;
                 }
-                itemQuantityPair.setQuantity(quantity - itemQuantityPair.getQuantity());
+                itemQuantityPair.setQuantity(itemQuantityPair.getQuantity() - quantity);
                 return true;
             }
         }
@@ -101,7 +104,7 @@ public class ItemQuantityList extends ArrayList<ItemQuantityList.ItemQuantityPai
     }
 
 
-    public class ItemQuantityPair {
+    public static class ItemQuantityPair {
         Product product;
         int quantity;
 
