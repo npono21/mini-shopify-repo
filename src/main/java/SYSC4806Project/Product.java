@@ -3,8 +3,6 @@ package SYSC4806Project;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: protect against negative prices
-
 /**
  * Products have a name and price that they can be sold for. Tags help buyers find types of products.
  */
@@ -15,7 +13,12 @@ public class Product {
 
     public Product(String name, double price) {
         this.name = name;
-        this.price = price;
+        if (price < 0) {
+            this.price = 0; // free
+            System.out.println("Negative price is not allowed. Price is set to 0.");
+        } else {
+            this.price = price;
+        }
     }
 
     public String getName() {
@@ -27,7 +30,11 @@ public class Product {
     }
 
     public void setPrice(int price) {
-        this.price = price;
+        if (price < 0) {
+            System.out.println("Negative price is not allowed. Price has not been changed.");
+        } else {
+            this.price = price;
+        }
     }
 
     public List<Tag> getTags() {
