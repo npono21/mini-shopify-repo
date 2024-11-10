@@ -44,7 +44,6 @@ public class ItemQuantityList extends ArrayList<ItemQuantityList.ItemQuantityPai
         return this.add(new ItemQuantityPair(product));
     }
 
-    // TODO: if quantity to remove is greater than current quantity, none should be removed.
     /**
      * Removes a quantity of a produce if the product is in the list and has at least that quantity already.
      * @param product type
@@ -54,6 +53,10 @@ public class ItemQuantityList extends ArrayList<ItemQuantityList.ItemQuantityPai
     public boolean removeItems(Product product, int quantity) {
         for (ItemQuantityPair itemQuantityPair : this) {
             if (itemQuantityPair.getItem().equals(product)) {
+                if (itemQuantityPair.quantity < quantity) {
+                    System.out.println("Attempted to remove more quantity than available. None were removed.");
+                    return false;
+                }
                 itemQuantityPair.setQuantity(quantity - itemQuantityPair.getQuantity());
                 return true;
             }
@@ -121,6 +124,10 @@ public class ItemQuantityList extends ArrayList<ItemQuantityList.ItemQuantityPai
         }
 
         public void setQuantity(int quantity) {
+            if (quantity < 0) {
+                System.out.println("Negative quantities are not permitted.");
+                return;
+            }
             this.quantity = quantity;
         }
 
