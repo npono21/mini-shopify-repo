@@ -8,4 +8,6 @@
 # other files
 *.pdf
 *.zip
+.DS_Store
 
+target

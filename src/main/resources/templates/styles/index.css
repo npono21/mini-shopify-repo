@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(99, 236, 185, 1) 50%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: white;
+}
+
+.page-title-div {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.page-title-div img {
+  margin-bottom: 65px;
+}
+
+h3 {
+  font-size: 2em;
+  margin-top: -50px;
+}
+
+p {
+  font-size: 1.2em;
+  margin: 5px 0 20px;
+}
+
+.login-div {
+  display: flex;
+  gap: 20px;
+  margin-left: 2%;
+}
+
+.login-div div {
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(93, 95, 255, 1) 0%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.login-div div:hover {
+  transform: translateY(-5px);
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgba(0, 212, 255, 1);
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+  background-color: rgba(93, 95, 255, 1);
+  transform: translateY(-2px);
+}
