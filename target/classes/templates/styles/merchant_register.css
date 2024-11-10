@@ -1,12 +1,5 @@
-/* Resetting margins and padding */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: "Arial", sans-serif;
+  font-family: "Roboto", sans-serif;
   background: linear-gradient(
     135deg,
     rgba(2, 0, 36, 1) 0%,
