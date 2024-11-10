@@ -104,7 +104,7 @@ public class ItemQuantityList extends ArrayList<ItemQuantityList.ItemQuantityPai
     }
 
 
-    public class ItemQuantityPair {
+    public static class ItemQuantityPair {
         Product product;
         int quantity;
 
