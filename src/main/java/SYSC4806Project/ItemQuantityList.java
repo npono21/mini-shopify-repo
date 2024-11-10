@@ -11,6 +11,7 @@ public class ItemQuantityList extends ArrayList<ItemQuantityList.ItemQuantityPai
 
     public ItemQuantityList() {}
 
+
     public ItemQuantityList(ArrayList<ItemQuantityPair> list) {
         this.addAll(list);
     }
@@ -22,6 +23,7 @@ public class ItemQuantityList extends ArrayList<ItemQuantityList.ItemQuantityPai
      * @return true if the amount could be added
      */
     public boolean addItems(Product product, int quantity) {
+
         if (product == null || !this.contains(product)) {return false;}
         else {
             for (ItemQuantityPair itemQuantityPair : this) {
@@ -40,7 +42,7 @@ public class ItemQuantityList extends ArrayList<ItemQuantityList.ItemQuantityPai
      * @return true if the product was added
      */
     public boolean addProduct(Product product) {
-        if (product == null || !this.contains(product)) {return false;}
+        if (product == null || this.contains(product)) {return false;}
         return this.add(new ItemQuantityPair(product));
     }
 
