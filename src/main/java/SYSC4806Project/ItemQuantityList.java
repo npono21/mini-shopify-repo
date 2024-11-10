@@ -60,7 +60,7 @@ public class ItemQuantityList extends ArrayList<ItemQuantityList.ItemQuantityPai
                     System.out.println("Attempted to remove more quantity than available. None were removed.");
                     return false;
                 }
-                itemQuantityPair.setQuantity(quantity - itemQuantityPair.getQuantity());
+                itemQuantityPair.setQuantity(itemQuantityPair.getQuantity() - quantity);
                 return true;
             }
         }
