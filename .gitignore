@@ -4,8 +4,13 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea
+
+# Target build files
+target/
 
 # other files
 *.pdf
 *.zip
-
+*.swp
+*.scratch
